@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo_firebase/resources/localization/app_localization.dart';
 import 'package:demo_firebase/src/auth/model/user_model.dart';
 import 'package:demo_firebase/src/base/view/home_view.dart';
 import 'package:demo_firebase/utils/bot_toast/zbot_toast.dart';
@@ -54,6 +55,8 @@ class AuthVm extends ChangeNotifier{
         await userCred.user?.sendEmailVerification().timeout(const Duration(seconds: 30));
         ZBotToast.showToastError(message: "Your email is not verified please verify your email to continue");
       }
+    } else {
+      ZBotToast.showToastError(message: "Password is incorrect");
     }
   }
 
@@ -121,6 +124,32 @@ class AuthVm extends ChangeNotifier{
     return FirebaseFirestore.instance.collection('user').snapshots().map(
             (snapshot) =>
             snapshot.docs.map((doc) => UserModel.fromJson(doc)).toList());
+  }
+
+  Future<bool> changePassword(String newPassword, String oldPassword) async {
+    bool proceed = false;
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      UserCredential result;
+      AuthCredential credentials =
+      EmailAuthProvider.credential(email: userModel.email ?? "", password: oldPassword);
+      if (user != null) {
+        result = await user.reauthenticateWithCredential(credentials);
+        if (result.user != null) await user.updatePassword(newPassword);
+        log("Password changed successfully!");
+        ZBotToast.showToastSuccess(message: "password_updated_successfully".L());
+        proceed = true;
+      } else {
+        proceed = false;
+        log("password does not match.");
+      }
+    } catch (e) {
+      proceed = false;
+      ZBotToast.showToastError(message: e.toString().split('] ').last);
+
+      log("Error changing password: $e");
+    }
+    return proceed;
   }
 
 

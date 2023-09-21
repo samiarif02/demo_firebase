@@ -151,7 +151,8 @@ class LocalizationMap {
         "no_new_notifications" : "No new notifications",
         "no_new_notifications_desc" : "We’ll notify you whenever you get any new notifications",
         "something_missing" : "Something’s missing!",
-        "something_missing_statement" : "Please make sure you’ve selected the time slot before proceeding."
+        "something_missing_statement" : "Please make sure you’ve selected the time slot before proceeding.",
+        "password_updated_successfully" : "password_updated_successfully"
       };
 
   static String getValue(String key) {
