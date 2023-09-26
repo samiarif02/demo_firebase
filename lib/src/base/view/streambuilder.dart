@@ -1,42 +1,41 @@
 import 'package:demo_firebase/src/auth/view/update_view.dart';
-import 'package:demo_firebase/src/auth/view_model/auth_vm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 import '../../../resources/resources.dart';
 import '../../../utils/app_button.dart';
 import '../../../utils/heights_widths.dart';
 import '../../../utils/widgets/global_widgets.dart';
-import '../model/user_model.dart';
+import '../../auth/model/user_model.dart';
+import '../../auth/view_model/auth_vm.dart';
 
-class FutureView extends StatefulWidget {
-  const FutureView({super.key});
+class StreamView extends StatefulWidget {
+  const StreamView({super.key});
 
   @override
-  State<FutureView> createState() => _FutureViewState();
+  State<StreamView> createState() => _StreamViewState();
 }
 
-class _FutureViewState extends State<FutureView> {
+class _StreamViewState extends State<StreamView> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AuthVm>(builder: (context, authVm, child) => Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
         color: R.colors.white,
-      ),
-      child: Padding(
+      ),      child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             h2,
             GlobalWidgets.bottomSheetBar(width: 10.w),
-            const Text('Future builder'),
+            const Text('Stream builder'),
             h3,
             Expanded(
-                child: FutureBuilder<List<UserModel>>(
-                    future: authVm.readFutureAllUser(),
+                child: StreamBuilder<List<UserModel>>(
+                    stream: authVm.readStreamAllUsers(),
                     builder: (context, snapshot) {
                       if (snapshot.data != null) {
                         final data = snapshot.data!;
@@ -44,7 +43,7 @@ class _FutureViewState extends State<FutureView> {
 
                         return ListView.builder(
                             itemCount: data.length,
-                            itemBuilder: (context, index) => show(data[index]));
+                            itemBuilder: (context, index) => show(data[index]),);
                       }
                       return const Center(
                         child: CircularProgressIndicator(),
@@ -83,4 +82,5 @@ class _FutureViewState extends State<FutureView> {
       ),
     );
   }
+
 }

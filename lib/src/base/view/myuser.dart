@@ -8,8 +8,8 @@ import 'package:sizer/sizer.dart';
 import '../../../resources/resources.dart';
 import '../../../utils/app_button.dart';
 import '../../../utils/heights_widths.dart';
-import '../model/user_model.dart';
-import '../view_model/auth_vm.dart';
+import '../../auth/model/user_model.dart';
+import '../../auth/view_model/auth_vm.dart';
 
 class MyUser extends StatefulWidget {
   const MyUser({super.key});
@@ -71,9 +71,9 @@ class _MyUserState extends State<MyUser> {
                 key: _formKey,
                   child: Column(
                     children: [
-                      passwordField(),
+                      currentPasswordField(),
                       h1,
-                      confirmPasswordField(),
+                      newPasswordField(),
                       h2,
                       AppButton(
                           buttonTitle: 'change_password',
@@ -81,7 +81,7 @@ class _MyUserState extends State<MyUser> {
                           onTap: () async {
                             // await context.read<AuthVm>().deleteUser();
                             if (_formKey.currentState!.validate()) {
-                              authVm.changePassword(passwordController.text, confirmPassController.text);
+                              authVm.changePassword(confirmPassController.text, passwordController.text);
                             }
                             // Get.offAndToNamed(LoginView.route);
                           }),
@@ -130,7 +130,7 @@ class _MyUserState extends State<MyUser> {
     );
   }
 
-  Widget passwordField() {
+  Widget currentPasswordField() {
     return TextFormField(
       focusNode: passwordFN,
       controller: passwordController,
@@ -154,7 +154,7 @@ class _MyUserState extends State<MyUser> {
         fontSize: 12.sp,
       ),
       decoration: R.decoration.fieldDecoration(
-        hintText: 'enter_your_password',
+        hintText: 'enter_your_current_password',
         hintTextStyle: R.textStyles
             .poppinsRegular(fontSize: 10.sp, color: R.colors.fieldTextColor),
         suffixIcon: InkWell(
@@ -177,7 +177,7 @@ class _MyUserState extends State<MyUser> {
     );
   }
 
-  Widget confirmPasswordField() {
+  Widget newPasswordField() {
     return TextFormField(
       focusNode: confirmPassFN,
       controller: confirmPassController,
@@ -201,7 +201,7 @@ class _MyUserState extends State<MyUser> {
         fontSize: 12.sp,
       ),
       decoration: R.decoration.fieldDecoration(
-        hintText: 'confirm_password',
+        hintText: 'enter_your_new_password',
         hintTextStyle: R.textStyles
             .poppinsRegular(fontSize: 10.sp, color: R.colors.fieldTextColor),
         suffixIcon: InkWell(

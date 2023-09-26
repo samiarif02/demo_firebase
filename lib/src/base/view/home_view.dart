@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_firebase/src/auth/model/user_model.dart';
-import 'package:demo_firebase/src/auth/view/futurebuilder.dart';
+import 'package:demo_firebase/src/base/view/chat_view.dart';
+import 'package:demo_firebase/src/base/view/futurebuilder.dart';
 import 'package:demo_firebase/src/auth/view/login_view.dart';
-import 'package:demo_firebase/src/auth/view/myuser.dart';
-import 'package:demo_firebase/src/auth/view/streambuilder.dart';
+import 'package:demo_firebase/src/base/view/myuser.dart';
+import 'package:demo_firebase/src/base/view/streambuilder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../resources/resources.dart';
 import '../../../utils/app_button.dart';
+import '../../../utils/bot_toast/zbot_toast.dart';
 import '../../../utils/heights_widths.dart';
 import '../../auth/view/update_view.dart';
 import '../../auth/view_model/auth_vm.dart';
@@ -131,6 +133,14 @@ class _HomeViewState extends State<HomeView> {
                 }),
             h2,
             AppButton(
+                buttonTitle: 'chats',
+                textColor: R.colors.white,
+                onTap: () {
+                  Get.toNamed(ChatView.route);
+                  setState(() {});
+                }),
+            h2,
+            AppButton(
                 buttonTitle: 'stream_builder',
                 textColor: R.colors.white,
                 onTap: () {
@@ -147,6 +157,17 @@ class _HomeViewState extends State<HomeView> {
                 textColor: R.colors.white,
                 onTap: ()  {
               Get.bottomSheet(const FutureView(),isScrollControlled: true);
+                }),
+            h2,
+            AppButton(
+                buttonTitle: 'delete',
+                textColor: R.colors.white,
+                onTap: ()  async {
+                  await FirebaseAuth.instance.currentUser?.delete();
+                  FirebaseAuth.instance.signOut();
+                  ZBotToast.showToastSuccess(message: 'Your Account is deleted!');
+                  Get.back();
+
                 })
           ],
         ),

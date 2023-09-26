@@ -8,6 +8,7 @@ import 'package:demo_firebase/routes/app_routes.dart';
 import 'package:demo_firebase/src/auth/view/check_data.dart';
 import 'package:demo_firebase/src/auth/view/login_view.dart';
 import 'package:demo_firebase/src/auth/view_model/auth_vm.dart';
+import 'package:demo_firebase/src/base/view_model/base_vm.dart';
 import 'package:demo_firebase/utils/no_internet_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ import 'package:sizer/sizer.dart';
 
 
 
-void main() async {
+Future<void>main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
@@ -31,6 +32,7 @@ void main() async {
       MultiProvider(
           providers: [
             ChangeNotifierProvider(create: (_) => AuthVm()),
+            ChangeNotifierProvider(create: (_) => ChatVM()),
       ],
       child: const MyApp()));
 }

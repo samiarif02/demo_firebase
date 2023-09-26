@@ -3,5 +3,6 @@ class AppImages {
   String user = "assets/images/user.png";
   String logo = "assets/images/logo.png";
   String s = "assets/images/s.png";
+  String send = "assets/images/send.png";
 
 }

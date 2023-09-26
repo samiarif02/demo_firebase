@@ -1,16 +1,10 @@
-import 'dart:convert';
-import 'dart:developer';
+
+import 'package:demo_firebase/src/auth/view/otp_view.dart';
 import 'demo.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_firebase/resources/localization/app_localization.dart';
-import 'package:demo_firebase/src/auth/model/user_model.dart';
 import 'package:demo_firebase/src/auth/view/forgetpass_view.dart';
 import 'package:demo_firebase/src/auth/view/signup_view.dart';
 import 'package:demo_firebase/src/auth/view_model/auth_vm.dart';
-import 'package:demo_firebase/src/base/view/home_view.dart';
-import 'package:demo_firebase/utils/bot_toast/zbot_toast.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -103,6 +97,16 @@ class _LoginViewState extends State<LoginView> {
                             // if (formKey.currentState!.validate()) {
                             await authVm.loginIn(emailController.text , passwordController.text);
                             // }
+                          },
+                          buttonWidth: Get.width,
+                          textSize: 14.sp,
+                          textPadding: 8.sp,
+                        ),
+                        h4P5,
+                        AppButton(
+                          buttonTitle: "otp_verification",
+                          onTap: ()  {
+                            Get.toNamed(OTPVerificationView.route);
                           },
                           buttonWidth: Get.width,
                           textSize: 14.sp,
